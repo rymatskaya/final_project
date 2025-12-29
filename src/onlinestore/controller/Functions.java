@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Functions {
-    private static Scanner scanner = new Scanner(System.in);
+    public static Scanner scanner = new Scanner(System.in);
 
     public static void Registration(UserService userService) {
         System.out.println(Constants.REGISTRATION_MENU);
@@ -58,7 +58,7 @@ public class Functions {
         if (matcher.find()) {
             User user = new User(username, password, email, role);
             try {
-                if (userService.create(user)) {
+                if (!userService.addUser(user).isEmpty()) {
                     System.out.println("Пользователь с логином " + username + " успешно создан");
                 } else {
                     System.out.println("Не удалось создать пользователя с логином " + username);
@@ -71,5 +71,25 @@ public class Functions {
         }
     }
 
+    public static void updateUser(UserService userService) {
+        System.out.println(Constants.EDIT_USER);
+        System.out.println(Constants.INPUT_LOGIN);
+        String username = scanner.nextLine();
+        System.out.println(Constants.INPUT_PASSWORD);
+        String password = scanner.nextLine();
+        System.out.println(Constants.INPUT_LOGIN_NEW);
+        String newUsername = scanner.nextLine();
+        System.out.println(Constants.INPUT_PASSWORD_NEW);
+        String newPassword = scanner.nextLine();
 
+        Optional<User> updatedUser = userService.updateUser(
+                username, password, newUsername, newPassword
+        );
+
+        if (updatedUser.isPresent()) {
+            System.out.println("Пользователь успешно обновлён!");
+        } else {
+            System.out.println("Ошибка: пользователь не найден или данные некорректны.");
+        }
+    }
 }

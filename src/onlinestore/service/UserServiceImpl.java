@@ -1,13 +1,14 @@
 package onlinestore.service;
 
 
+import onlinestore.controller.Constants;
 import onlinestore.domain.User;
-import onlinestore.domain.UserRole;
-import onlinestore.exception.ClientException;
 import onlinestore.repository.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
+
+import static onlinestore.controller.Functions.scanner;
 
 public class UserServiceImpl implements UserService {
 
@@ -15,45 +16,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean create(User user) {
-        Optional<User> optionalUser = userRepository.findUserByLogin(user.getUsername());
-        if (optionalUser.isEmpty()) {
+        boolean optionalUser = userRepository.findUserByLogin(user.getUsername());
+        if (!optionalUser) {
             return userRepository.create(user);
         }
         throw new RuntimeException("Пользователь с таким именем существует!");
     }
 
     @Override
-    public Optional<User> findUserByLogin(String username) {
-        return Optional.empty();
+    public boolean findUserByLogin(String username) {
+        if (username == null || username.trim().isEmpty()) {
+            return false;
+        }
+        return userRepository.findUserByLogin(username);
     }
-
-//    @Override
-//    public boolean checkUserByLogin(String username) {
-//        return userRepository.checkUserByLogin(username);
-//    }
 
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
-    public User checkPassword(String username, String password) {
-        if (username == null || password == null ||
-                username.trim().isEmpty() || password.trim().isEmpty()) {
-            return null;
-        }
-        List <User> users = userRepository.getAllUsers();
-        User user = (User) users.stream()
-                .filter(user1 -> user1.getUsername().equals(username));
-                //.orElseThrow(() -> new ClientException("Пользователь с таким логином не найден!"));
-        if (!(user.getPassword().equals(password))) {
-            throw new ClientException("Неверно введен пароль!");
-        }
-        return user;
-    }
-
-    @Override
-    public User addUser(User user) {
+    public Optional<User> addUser(User user) {
         return userRepository.addUser(user);
     }
 
@@ -69,5 +52,16 @@ public class UserServiceImpl implements UserService {
             return Optional.empty();
         }
         return userRepository.getUserByLoginPassword(username, password);
+    }
+
+    @Override
+    public Optional<User> updateUser(String username, String password, String newUsername, String newPassword) {
+        if (username == null || password == null || newUsername == null || newPassword == null ||
+                username.trim().isEmpty() || password.trim().isEmpty() ||
+                newUsername.trim().isEmpty() || newPassword.trim().isEmpty()) {
+            return Optional.empty();
+        }
+
+        return userRepository.updateUser(username, password,newUsername,newPassword);
     }
 }

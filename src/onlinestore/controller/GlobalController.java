@@ -16,8 +16,8 @@ public class GlobalController {
     public static void start() {
         UserRepository userRepository = new UserRepositoryImpl();
         UserService userService = new UserServiceImpl(userRepository);
-        User admin = new User("admin","qwerty","qwq@vdm.ds", UserRole.ADMIN);
-        userService.create(admin);
+//        User user = new User(1, "admin", "qwerty", "adgs@ff.dd", "ADMIN");
+//        userService.create(user);
 
         while (true) {
             System.out.println(Constants.MAIN_MENU);
@@ -27,9 +27,9 @@ public class GlobalController {
 
             switch (step) {
                 case "1" -> {
-
+                    Functions.addUser(userService);
                    // Functions.Registration(userService);
-                    userService.getAllUsers().forEach(System.out::println);
+                   // userService.getAllUsers().forEach(System.out::println);
                 }
                 case "2" -> {
 

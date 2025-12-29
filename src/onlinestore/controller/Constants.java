@@ -12,6 +12,8 @@ public class Constants {
     public static final String REGISTRATION_MENU = "Меню регистрации";
     public static final String INPUT_LOGIN = "Введите логин:";
     public static final String INPUT_PASSWORD = "Введите пароль:";
+    public static final String INPUT_LOGIN_NEW = "Введите новый логин:";
+    public static final String INPUT_PASSWORD_NEW = "Введите новый пароль:";
     public static final String INPUT_EMAIL = "Введите email:";
     public static final String INPUT_ROLE = "Введите роль:";
     public static final String INPUT_MENU = "Меню входа";

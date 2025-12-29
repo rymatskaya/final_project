@@ -32,7 +32,7 @@ public class MenuAdmin {
 
             } else if (step.equals("2")) {
                 System.out.println(Constants.EDIT_USER);
-                //Functions.updateUser(userService);
+                Functions.updateUser(userService);
 
             } else if (step.equals("3")) {
                 System.out.println(Constants.DELETE_USER);
@@ -40,7 +40,7 @@ public class MenuAdmin {
 
             } else if (step.equals("4")) {
                 System.out.println(Constants.VIEW_USERS);
-                //userService.getAll().forEach(System.out::println);
+                userService.getAllUsers().forEach(System.out::println);
 
             } else if (step.equals("5")) {
                 System.out.println(Constants.ADD_GOOD);
