@@ -2,6 +2,7 @@ package onlinestore.repository;
 
 import onlinestore.controller.Constants;
 import onlinestore.domain.Good;
+import onlinestore.domain.User;
 import onlinestore.exception.FileException;
 
 import java.io.*;
@@ -44,6 +45,53 @@ public class GoodRepositoryImpl implements GoodRepository{
 
         return false;
     }
+
+    @Override
+    public Optional<Good> getGoodByCode(String code) {
+        goods = getAllGoods();
+
+        for (Good good : goods) {
+            if (good.getCode().equals(code)) {
+                return Optional.of(good);
+            }
+        }
+
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Good> updateGood(String code, String newName, String newBrand, String newCategory, Double newPrice, Integer newAge) {
+        List<Good> goods = getAllGoods();
+        Optional<Good> updatedGood = getGoodByCode(code);
+        if (updatedGood.isPresent()) {
+            Good good = updatedGood.get();
+            good.setName(newName);
+            good.setBrand(newBrand);
+            good.setGoodType(newCategory);
+            good.setPrice(newPrice);
+            good.setAge(newAge);
+            serializeObject(goods, Constants.FILEPATHGOODS);
+            return Optional.of(good);
+
+        } else {
+            return Optional.empty(); // Пользователь не найден
+        }
+
+     }
+
+    @Override
+    public Optional<Good> deleteGood(String code) {
+        Optional<Good> goodOptional = getGoodByCode(code);
+        if (goodOptional.isPresent()) {
+            Good good = goodOptional.get();
+            goods.remove(good);
+            serializeObject(goods, Constants.FILEPATHGOODS);
+            return Optional.of(good);
+        } else {
+            return Optional.empty(); // Пользователь не найден
+        }
+    }
+
 
     public Object deserializeObject(String path) {
         Object object = null;

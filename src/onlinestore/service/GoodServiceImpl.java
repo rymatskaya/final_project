@@ -1,5 +1,6 @@
 package onlinestore.service;
 
+import onlinestore.controller.Constants;
 import onlinestore.domain.Good;
 import onlinestore.domain.User;
 import onlinestore.repository.GoodRepository;
@@ -28,4 +29,30 @@ public class GoodServiceImpl implements GoodService{
     public boolean findGoodByCode(String code) {
         return goodRepository.findGoodByCode(code);
     }
+
+    @Override
+    public Optional<Good> getGoodByCode(String code) {
+        if (code == null || code.trim().isEmpty()) {
+            return Optional.empty();
+        }
+        return goodRepository.getGoodByCode(code);
+    }
+
+    @Override
+    public Optional<Good> updateGood(String code, String newName, String newBrand, String newCategory, Double newPrice,
+                                     Integer newAge) {
+        if (code == null || code.trim().isEmpty() ) {
+            return Optional.empty();
+        }
+        return goodRepository.updateGood(code, newName, newBrand, newCategory, newPrice, newAge);
+
+    }
+
+    public Optional<Good> deleteGood(String code) {
+        if (code == null || code.trim().isEmpty() ) {
+            return Optional.empty();
+        }
+        return goodRepository.deleteGood(code);
+    }
+
 }

@@ -45,11 +45,9 @@ public class MenuAdmin {
             } else if (step.equals("5")) {
                 Functions.addGood(goodService);
             } else if (step.equals("6")) {
-                System.out.println(Constants.EDIT_GOOD);
-                //Functions.EditGood(goodService);
+                Functions.updateGood(goodService);
             } else if (step.equals("7")) {
-                System.out.println(Constants.DELETE_GOOD);
-                //Functions.DeleteGood(goodService);
+                Functions.DeleteGood(goodService);
             } else if (step.equals("8")) {
                 System.out.println(Constants.VIEW_GOODS);
                 goodService.getAllGoods().forEach(System.out::println);

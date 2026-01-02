@@ -136,7 +136,44 @@ public class Functions {
         } catch (RuntimeException e) {
             System.out.println("Добавление товара не работает. Обратитесь к администратору системы");
         }
+    }
+    public static void updateGood(GoodService goodService) {
+        System.out.println(Constants.EDIT_GOOD);
+        System.out.println(Constants.INPUT_CODE);
+        String code = scanner.nextLine();
+        System.out.println(Constants.INPUT_GOOD);
+        String newName = scanner.nextLine();
+        System.out.println(Constants.INPUT_BRAND);
+        String newBrand = scanner.nextLine();
+        System.out.println(Constants.INPUT_CATEGORY);
+        String newCategory = scanner.nextLine();
+        System.out.println(Constants.INPUT_PRICE);
+        Double newpPrice = scanner.nextDouble();
+        System.out.println(Constants.INPUT_AGE);
+        Integer newAge = scanner.nextInt();
 
+        Optional<Good> updatedGood = goodService.updateGood(
+                code, newName, newBrand, newCategory, newpPrice, newAge
+        );
+
+        if (updatedGood.isPresent()) {
+            System.out.println("Товар успешно обновлён!");
+        } else {
+            System.out.println("Ошибка: товар не найден или данные некорректны.");
+        }
     }
 
+    public static void DeleteGood(GoodService goodService) {
+        System.out.println(Constants.DELETE_GOOD);
+        System.out.println(Constants.INPUT_CODE);
+        String code = scanner.nextLine();
+
+        Optional<Good> deleteGood = goodService.deleteGood(code);
+
+        if (deleteGood.isPresent()) {
+            System.out.println("Товар успешно удален!");
+        } else {
+            System.out.println("Ошибка: товар не найден или данные некорректны.");
+        }
+    }
 }
