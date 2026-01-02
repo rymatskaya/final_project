@@ -56,4 +56,6 @@ public class Constants {
     public static final String DELETE_GOOD = "Удаление товара";
     public static final String VIEW_GOODS = "Просмотр товаров";
 
+    public static final String VIEW_GOOD_CATEGORY = "Просмотр товаров по категориям: ";
+    public static final String VIEW_GOOD_CATEGORY_PRICE = "Просмотр товаров по категориям и цене:";
 }

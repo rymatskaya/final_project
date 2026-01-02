@@ -92,6 +92,35 @@ public class GoodRepositoryImpl implements GoodRepository{
         }
     }
 
+    @Override
+    public List<Good> getGoodsByCategory(String category) {
+        Object object = deserializeObject(Constants.FILEPATHGOODS);
+        if (object instanceof List<?>) {
+           goods = (List<Good>) object;
+        }
+        List <Good> goodList = new ArrayList<>();
+        for (Good good : goods) {
+            if (good.getGoodType().equals(category)) {
+                goodList.add(good);
+            }
+        }
+        return goodList;
+    }
+
+    @Override
+    public List<Good> getGoodsByCategoryPrice(String category, Double price) {
+        Object object = deserializeObject(Constants.FILEPATHGOODS);
+        if (object instanceof List<?>) {
+            goods = (List<Good>) object;
+        }
+        List <Good> goodList = new ArrayList<>();
+        for (Good good : goods) {
+            if (good.getGoodType().equals(category) && good.getPrice() > price) {
+                goodList.add(good);
+            }
+        }
+        return goodList;
+    }
 
     public Object deserializeObject(String path) {
         Object object = null;

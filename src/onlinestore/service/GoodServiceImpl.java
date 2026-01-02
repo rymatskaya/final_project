@@ -54,5 +54,19 @@ public class GoodServiceImpl implements GoodService{
         }
         return goodRepository.deleteGood(code);
     }
+    public List<Good> getGoodsByCategory(String category){
+        if (category == null || category.trim().isEmpty() ) {
+            return null;
+        }
+        return goodRepository.getGoodsByCategory(category);
+    }
+
+    public List<Good> getGoodsByCategoryPrice(String category, Double price) {
+        if (category == null || category.trim().isEmpty() || price == 0.00 ) {
+            return null;
+        }
+        return goodRepository.getGoodsByCategoryPrice(category, price);
+    }
+
 
 }

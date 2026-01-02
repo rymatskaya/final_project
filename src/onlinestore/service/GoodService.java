@@ -15,4 +15,6 @@ public interface GoodService {
             String code, String newName, String newBrand, String newCategory, Double newpPrice,
             Integer newAge);
     Optional<Good> deleteGood(String code);
+    List<Good> getGoodsByCategory(String category);
+    List<Good> getGoodsByCategoryPrice(String category, Double price);
 }
