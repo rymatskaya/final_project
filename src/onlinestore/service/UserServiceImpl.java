@@ -14,24 +14,7 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
 
-    @Override
-    public boolean create(User user) {
-        boolean optionalUser = userRepository.findUserByLogin(user.getUsername());
-        if (!optionalUser) {
-            return userRepository.create(user);
-        }
-        throw new RuntimeException("Пользователь с таким именем существует!");
-    }
-
-    @Override
-    public boolean findUserByLogin(String username) {
-        if (username == null || username.trim().isEmpty()) {
-            return false;
-        }
-        return userRepository.findUserByLogin(username);
-    }
-
-    public UserServiceImpl(UserRepository userRepository) {
+       public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -63,5 +46,14 @@ public class UserServiceImpl implements UserService {
         }
 
         return userRepository.updateUser(username, password,newUsername,newPassword);
+    }
+
+    @Override
+    public Optional<User> deleteUser(String username) {
+        if (username == null || username.trim().isEmpty() ) {
+            return Optional.empty();
+        }
+
+        return userRepository.deleteUser(username);
     }
 }

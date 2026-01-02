@@ -5,7 +5,8 @@ public enum GoodType {
     HOUSEGOLD("Хозяйственные товары"),
     HABERDASHERY("Галантерейные товары"),
     CONSTRUCTION("Строительные материалы"),
-    SPORT("Спортивные товары");
+    SPORT("Спортивные товары"),
+    TECHNIC("Техника");
 
     private String type;
 

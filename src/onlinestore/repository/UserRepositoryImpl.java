@@ -34,39 +34,19 @@ public class UserRepositoryImpl implements UserRepository {
         return false;
     }
 
-    @Override
-    public boolean create(User user) {
-        String username = user.getUsername();
-        users = getAllUsers();
-        users.add(user);
-        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(Constants.FILEPATH))) {
-            if (findUserByLogin(username)) {
-                objectOutputStream.writeObject(users);
-                System.out.println("Пользователь успешно добавлен!");
-                objectOutputStream.close();
-                return true;
-            } else
-                throw new RuntimeException(String.format("Пользователь существует %s ", username));
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public Optional<User> updateUser( String username, String password,  String newUsername, String newPassword) {
+    public Optional<User> updateUser(String username, String password, String newUsername, String newPassword) {
 
         Optional<User> userOptional = getUserByLoginPassword(username, password);
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-
-            user.setUsername(newUsername);
-            user.setPassword(newPassword); // В продакшене — хешировать!
-
-            serializeObject(users, Constants.FILEPATH);
-
-            return Optional.of(user);
+            if (!(findUserByLogin(newUsername))) {
+                user.setUsername(newUsername);
+                user.setPassword(newPassword);
+                serializeObject(users, Constants.FILEPATH);
+                return Optional.of(user);
+            } else
+                throw new RuntimeException(String.format("Пользователь существует %s ", newUsername));
         } else {
             return Optional.empty(); // Пользователь не найден
         }
@@ -74,14 +54,40 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> getUserByLoginPassword(String username, String password) {
-            users = getAllUsers();
+    public Optional<User> deleteUser(String username) {
+        Optional<User> userOptional = getUserByLogin(username);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            users.remove(user);
+            serializeObject(users, Constants.FILEPATH);
+            return Optional.of(user);
+        } else {
+            return Optional.empty(); // Пользователь не найден
+        }
+    }
 
-            for (User user : users) {
-                if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
-                    return Optional.of(user);
-                }
+    @Override
+    public Optional<User> getUserByLoginPassword(String username, String password) {
+        users = getAllUsers();
+
+        for (User user : users) {
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                return Optional.of(user);
             }
+        }
+
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<User> getUserByLogin(String username) {
+        users = getAllUsers();
+
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                return Optional.of(user);
+            }
+        }
 
         return Optional.empty();
     }
@@ -102,7 +108,6 @@ public class UserRepositoryImpl implements UserRepository {
         if (!(findUserByLogin(user.getUsername()))) {
             users.add(user);
             serializeObject(users, Constants.FILEPATH);
-            System.out.println("Пользователь успешно добавлен!");
             return Optional.of(user);
         } else
             throw new RuntimeException(String.format("Пользователь существует %s ", user.getUsername()));

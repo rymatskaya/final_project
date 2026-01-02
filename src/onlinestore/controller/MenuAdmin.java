@@ -36,15 +36,14 @@ public class MenuAdmin {
 
             } else if (step.equals("3")) {
                 System.out.println(Constants.DELETE_USER);
-                //Functions.deleteUser(userService);
+                Functions.deleteUser(userService);
 
             } else if (step.equals("4")) {
                 System.out.println(Constants.VIEW_USERS);
                 userService.getAllUsers().forEach(System.out::println);
 
             } else if (step.equals("5")) {
-                System.out.println(Constants.ADD_GOOD);
-                //Functions.AddGood(goodService);
+                Functions.addGood(goodService);
             } else if (step.equals("6")) {
                 System.out.println(Constants.EDIT_GOOD);
                 //Functions.EditGood(goodService);
@@ -53,7 +52,7 @@ public class MenuAdmin {
                 //Functions.DeleteGood(goodService);
             } else if (step.equals("8")) {
                 System.out.println(Constants.VIEW_GOODS);
-                //movieService.getAllGoods().forEach(System.out::println);
+                goodService.getAllGoods().forEach(System.out::println);
             } else if (step.equals("0")) {
                 GlobalController.start();
                 break;

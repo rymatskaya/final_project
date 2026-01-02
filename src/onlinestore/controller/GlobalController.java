@@ -27,9 +27,7 @@ public class GlobalController {
 
             switch (step) {
                 case "1" -> {
-                    Functions.addUser(userService);
-                   // Functions.Registration(userService);
-                   // userService.getAllUsers().forEach(System.out::println);
+                    Functions.Registration(userService);
                 }
                 case "2" -> {
 

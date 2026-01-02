@@ -15,9 +15,9 @@ public class Good implements Serializable {
     private String brand;
     private Double price;
     private Integer age;
-    private GoodType goodType;
+    private String goodType;
 
-    public Good(Integer id, String name, String code, String brand, Double price, Integer age, GoodType goodType) {
+    public Good(Integer id, String name, String code, String brand, Double price, Integer age, String goodType) {
         this.id = id;
         this.name = name;
         this.code = code;
@@ -27,7 +27,7 @@ public class Good implements Serializable {
         this.goodType = goodType;
     }
 
-    public Good(String name, String code, String brand, Double price, GoodType goodType) {
+    public Good(String name, String code, String brand, Double price, String goodType) {
         this.name = name;
         this.code = code;
         this.brand = brand;
@@ -35,7 +35,7 @@ public class Good implements Serializable {
         this.goodType = goodType;
     }
 
-    public Good(String name, String code, String brand, Double price, Integer age, GoodType goodType) {
+    public Good(String name, String code, String brand, Double price, Integer age, String goodType) {
         this.name = name;
         this.code = code;
         this.brand = brand;
@@ -84,11 +84,11 @@ public class Good implements Serializable {
         this.age = age;
     }
 
-    public GoodType getGoodType() {
+    public String getGoodType() {
         return goodType;
     }
 
-    public void setGoodType(GoodType goodType) {
+    public void setGoodType(String goodType) {
         this.goodType = goodType;
     }
 

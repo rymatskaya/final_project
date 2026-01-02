@@ -1,8 +1,11 @@
 package onlinestore.controller;
 
+import onlinestore.domain.Good;
+import onlinestore.domain.GoodType;
 import onlinestore.domain.User;
 import onlinestore.domain.UserRole;
 import onlinestore.exception.FileException;
+import onlinestore.service.GoodService;
 import onlinestore.service.UserService;
 
 import java.io.*;
@@ -29,7 +32,7 @@ public class Functions {
         if (matcher.find()) {
             User user = new User(username, password, email, UserRole.USER);
             try {
-                if (userService.create(user)) {
+                if (!userService.addUser(user).isEmpty()) {
                     System.out.println("Пользователь с логином " + username + " успешно создан");
                 } else {
                     System.out.println("Не удалось создать пользователя с логином " + username);
@@ -92,4 +95,48 @@ public class Functions {
             System.out.println("Ошибка: пользователь не найден или данные некорректны.");
         }
     }
+
+    public static void deleteUser(UserService userService) {
+        System.out.println(Constants.DELETE_USER);
+        System.out.println(Constants.INPUT_LOGIN);
+        String username = scanner.nextLine();
+
+        Optional<User> deleteUser = userService.deleteUser(username);
+
+        if (deleteUser.isPresent()) {
+            System.out.println("Пользователь успешно удален!");
+        } else {
+            System.out.println("Ошибка: пользователь не найден или данные некорректны.");
+        }
+    }
+
+
+    public static void addGood(GoodService goodService) {
+        System.out.println(Constants.ADD_GOOD);
+        System.out.println(Constants.INPUT_GOOD);
+        String name = scanner.nextLine();
+        System.out.println(Constants.INPUT_CODE);
+        String code = scanner.nextLine();
+        System.out.println(Constants.INPUT_BRAND);
+        String brand = scanner.nextLine();
+        System.out.println(Constants.INPUT_CATEGORY);
+        String category = scanner.nextLine();
+        System.out.println(Constants.INPUT_PRICE);
+        Double price = scanner.nextDouble();
+        System.out.println(Constants.INPUT_AGE);
+        Integer age = scanner.nextInt();
+
+        Good good = new Good(name, code, brand, price, age, category);
+        try {
+            if (!goodService.addGood(good).isEmpty()) {
+                System.out.println("Товар " + name + " успешно добавлен");
+            } else {
+                System.out.println("Не удалось создать товар с наименованием " + name);
+            }
+        } catch (RuntimeException e) {
+            System.out.println("Добавление товара не работает. Обратитесь к администратору системы");
+        }
+
+    }
+
 }

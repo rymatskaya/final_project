@@ -2,6 +2,7 @@ package onlinestore.controller;
 
 public class Constants {
     public static final String FILEPATH = "d:\\Java\\project\\shop\\final_project\\users.ser";
+    public static final String FILEPATHGOODS = "d:\\Java\\project\\shop\\final_project\\goods.ser";
     public static final String MAIN_MENU = """
             Добро пожаловать!
             1 - Регистрация пользователя
@@ -38,6 +39,13 @@ public class Constants {
              
              0 - Вернуться в главное меню                   
             """;
+    public static final String INPUT_GOOD = "Введите нименование товара:";
+    public static final String INPUT_CODE = "Введите код товара:";
+    public static final String INPUT_BRAND = "Введите брэнд товара:";
+    public static final String INPUT_CATEGORY = "Введите категорию товара:";
+    public static final String INPUT_AGE = "Введите ограничение по возрасту товара:";
+    public static final String INPUT_PRICE = "Введите цену товара:";
+
     public static final String ADD_USER = "Добавление пользователя";
     public static final String EDIT_USER = "Изменение пользователя";
     public static final String DELETE_USER = "Удаление пользователя";
